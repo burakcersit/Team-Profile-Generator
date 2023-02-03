@@ -1,167 +1,153 @@
 const inquirer = require('inquirer');
-const path = require('path');
 const fs = require('fs');
-
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
-
+const path = require('path');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 const outputPath = path.join(DIST_DIR, 'teamProfile.html');
-
+//requires of files
+const Manager = require('./lib/Manager');//manager
+const Engineer = require('./lib/Engineer');//engineer
+const Intern = require('./lib/Intern');//intern
+//const Employee = require('./lib/Employee');
+// template html require code
 const templateHTML = require('./src/templateHTML');
-
-const teamMembers = [];
-
-
-
-function addTeamMember() {
+// team members Info array
+const teamInfo = [];
+//add team member information function
+function addTeamMemberInfo() {
     inquirer
         .prompt([
             {
                 type: 'list',
-                name: 'what_team_member',
-                message: 'Add an engineer, Add an intern or finish assembling your team?',
+                name: 'team_member',
+                message: 'Would you like to add more members? or you can finish the assemble',
                 choices: ['Engineer', 'Intern', 'Assemble Team!'],
             },
         ])
+        //after select the option, function going to next step in here
         .then((val) => {
-            if (val.what_team_member === 'Engineer') {
-                addEngineer();
-            } else if (val.what_team_member === 'Intern') {
-                addIntern();
+            if (val.team_member === 'Engineer') {
+                addEngineerInfo();
+            } else if (val.team_member === 'Intern') {
+                addInternInfo();
             } else {
                 createTeamFile();
             }
         });
 }
 
-
-function addManager() {
+// add manager information function
+function addManagerInfo() {
     inquirer
         .prompt([
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is the name of the team manager?',
+                message: 'team manager name?',
             },
             {
                 type: 'input',
                 name: 'id',
-                message: 'Employee ID of the team manager?',
+                message: 'the team managers Employee ID?'
             },
             {
                 type: 'input',
                 name: 'email',
-                message: 'Email address of the team manager?',
+                message: 'the team manager Email address?',
             },
-            {
-                type: 'input',
-                name: 'imgSrc',
-                message: 'What is the imgSrc of the team manager?',
-            },
+
             {
                 type: 'input',
                 name: 'officeNumber',
-                message: 'What is the office number of the team manager?',
+                message: 'office number of the manager?',
             },
         ])
+        //next step after input has been entered
         .then((val) => {
-            const manager = new Manager(val.name, val.id, val.email, val.imgSrc, val.officeNumber);
+            const manager = new Manager(val.name, val.id, val.email, val.officeNumber);
             console.table(manager);
-            teamMembers.push(manager);
-            addTeamMember();
+            teamInfo.push(manager);
+            addTeamMemberInfo();
         });
 }
-
-function addEngineer() {
+//add engindeer information funcktion
+function addEngineerInfo() {
     inquirer
         .prompt([
             {
                 type: 'input',
                 name: 'name',
-                message: `What is the engineers's name`,
+                message: `engineers's name`,
             },
             {
                 type: 'input',
                 name: 'id',
-                message: `What is the engineer's employee ID?`,
+                message: `engineer's employee ID?`,
             },
             {
                 type: 'input',
                 name: 'email',
-                message: `What is the engineer's email address?`,
+                message: ` engineer's email address?`,
             },
-            {
-                type: 'input',
-                name: 'imgSrc',
-                message: 'What is the img Src of the Engineer?',
-            },
+
             {
                 type: 'input',
                 name: 'gitHub',
-                message: `What is the engineer's github profile name?`,
+                message: `engineer's github profile name?`,
             },
         ])
+        // after enter the input, next step
         .then((val) => {
-            const engineer = new Engineer(val.name, val.id, val.email, val.imgSrc, val.gitHub);
+            const engineer = new Engineer(val.name, val.id, val.email, val.gitHub);
             console.table(engineer);
-            teamMembers.push(engineer);
-            addTeamMember();
+            teamInfo.push(engineer);
+            addTeamMemberInfo();
         });
 }
-
-function addIntern() {
+//add intern information function
+function addInternInfo() {
     inquirer
         .prompt([
             {
                 type: 'input',
                 name: 'name',
-                message: `What is the Intern's name`,
+                message: `Intern's name`,
             },
             {
                 type: 'input',
                 name: 'id',
-                message: `What is the Intern's employee ID?`,
+                message: `Intern's employee ID?`,
             },
             {
                 type: 'input',
                 name: 'email',
-                message: `What is the Intern's email address?`,
+                message: `Intern's email address?`,
             },
-            {
-                type: 'input',
-                name: 'imgSrc',
-                message: 'What is the img Src of the Intern?',
-            },
+
             {
                 type: 'input',
                 name: 'school',
-                message: `What school did the intern go to?`,
+                message: `School?`,
             },
-        ])
+        ])// then pusht the info in the file
         .then((val) => {
-            const intern = new Intern(val.name, val.id, val.email, val.imgSrc, val.school);
+            const intern = new Intern(val.name, val.id, val.email, val.school);
             console.table(intern);
-            teamMembers.push(intern);
-            addTeamMember();
+            teamInfo.push(intern);
+            addTeamMemberInfo();
         });
 }
 
-
+//creating the file of team
 function createTeamFile() {
     if (!fs.existsSync(DIST_DIR)) {
         fs.mkdirSync(DIST_DIR);
     } else {
-        fs.writeFileSync(outputPath, templateHTML(teamMembers), 'utf-8');
-        console.log('HTML file created in the dist folder');
+        fs.writeFileSync(outputPath, templateHTML(teamInfo), 'utf-8');
+        console.log('The file has been created');
     }
 }
-
-
-
-function startApp() {
-    addManager();
+// function starting point
+function starting() {
+    addManagerInfo();
 }
-
-startApp();
+starting();

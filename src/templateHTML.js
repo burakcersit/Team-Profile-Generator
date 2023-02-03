@@ -1,8 +1,6 @@
-
 const renderTeam = (team) => {
     const renderManager = (manager) => `
                 <div class="card col-3 me-3 mb-5 employee-card">
-                    <img src="${manager.imgSrc}">
                     <div class="card-header employee-header">
                         <h2 class="card-title">${manager.name}</h2>
                         <h3 class="card-title"><i class="fa-solid fa-people-roof"></i> ${manager.title}</h3>
@@ -21,7 +19,6 @@ const renderTeam = (team) => {
 
     const renderEngineer = (engineer) => `
                 <div class="card col-3 me-3 mb-5 employee-card">
-                    <img src="${engineer.imgSrc}">
                     <div class="card-header employee-header">
                         <h2 class="card-title">${engineer.name}</h2>
                         <h3 class="card-title"><i class="fa-solid fa-wrench"></i> ${engineer.title}</h3>
@@ -44,7 +41,6 @@ const renderTeam = (team) => {
 
     const renderIntern = (intern) => `
                 <div class="card col-3 me-3 mb-5 employee-card">
-                    <img src="${intern.imgSrc}">
                     <div class="card-header employee-header">
                         <h2 class="card-title">${intern.name}</h2>
                         <h3 class="card-title"><i class="fa-solid fa-wrench"></i> ${intern.title}</h3>
@@ -86,7 +82,6 @@ const renderTeam = (team) => {
 const renderMain = (team) => `
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -102,7 +97,6 @@ const renderMain = (team) => `
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -120,7 +114,6 @@ const renderMain = (team) => `
     </div>
 </body>
 <script src="https://kit.fontawesome.com/cba39ebf54.js" crossorigin="anonymous"></script>
-
 </html>
 `;
 
